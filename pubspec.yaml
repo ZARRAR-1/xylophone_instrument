@@ -24,18 +24,16 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-
   cupertino_icons: ^1.0.2
   audioplayers: ^5.2.1
   flutter_native_splash: ^2.4.0
 
 #Configuring splash Screen
 flutter_native_splash:
-  color: #42a5f5
-  image: assets/splash.png
+#  color: "#42a5f5"
+  image: assets/logo/splash.png
   android: true
   ios: true
-
 
 dev_dependencies:
   flutter_test:
@@ -45,6 +43,5 @@ dev_dependencies:
 # The following section is specific to Flutter packages.
 flutter:
   uses-material-design: true
-
   assets:
     - assets/
