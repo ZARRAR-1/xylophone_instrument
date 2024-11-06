@@ -28,12 +28,19 @@ class XylophoneApp extends StatelessWidget {
           playSound(soundNumber: soundNum);
         },
         child: const Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             Card(
-              shape: CircleBorder( ),
+              shape: CircleBorder(),
               color: Colors.white,
             ),
-
+            // SizedBox(
+            //   width: 100,
+            // ),
+            Card(
+              shape: CircleBorder(),
+              color: Colors.white,
+            ),
           ],
         ),
       ),
