@@ -28,13 +28,39 @@ class XylophoneApp extends StatelessWidget {
           playSound(soundNumber: soundNum);
         },
         child: const Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             Card(
-              shape: CircleBorder( ),
+              shape: CircleBorder(),
               color: Colors.white,
             ),
-
+            Card(
+              shape: CircleBorder(),
+              color: Colors.white,
+            ),
           ],
+        ),
+      ),
+    );
+  }
+
+  Widget buildKey1({required soundNum, required bgColor}) {
+    return Expanded(
+      flex: 5,
+      child: Container(
+        child: Card.filled(
+          shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(
+              Radius.circular(20),
+            ),
+          ),
+          color: bgColor,
+          child: const Row(
+            children: [
+              Card(),
+              Card(),
+            ],
+          ),
         ),
       ),
     );
@@ -68,7 +94,7 @@ class XylophoneApp extends StatelessWidget {
                   child: Padding(
                     padding: const EdgeInsets.fromLTRB(5, 5, 5, 0.5),
                     // Add padding
-                    child: buildKey(
+                    child: buildKey1(
                         soundNum: 7,
                         bgColor: Colors.purpleAccent), //purpleAccent
                   ),
@@ -80,7 +106,7 @@ class XylophoneApp extends StatelessWidget {
                   child: Padding(
                     padding: const EdgeInsets.fromLTRB(5, 2, 5, 0.5),
                     // Add padding
-                    child: buildKey(
+                    child: buildKey1(
                         soundNum: 6, bgColor: Colors.lightBlue), //lightBlue
                   ),
                 ),
@@ -91,7 +117,7 @@ class XylophoneApp extends StatelessWidget {
                   child: Padding(
                     padding: const EdgeInsets.fromLTRB(5, 2, 5, 0.5),
                     // Add padding
-                    child: buildKey(soundNum: 5, bgColor: Colors.teal), //teal
+                    child: buildKey1(soundNum: 5, bgColor: Colors.teal), //teal
                   ),
                 ),
                 SizedBox(
@@ -101,7 +127,7 @@ class XylophoneApp extends StatelessWidget {
                   child: Padding(
                     padding: const EdgeInsets.fromLTRB(5, 2, 5, 0.5),
                     // Add padding
-                    child: buildKey(soundNum: 4, bgColor: Colors.green),
+                    child: buildKey1(soundNum: 4, bgColor: Colors.green),
                   ),
                 ),
                 SizedBox(
@@ -112,7 +138,7 @@ class XylophoneApp extends StatelessWidget {
                     padding: const EdgeInsets.fromLTRB(5, 2, 5, 0.5),
                     // Add padding
                     child:
-                        buildKey(soundNum: 3, bgColor: Colors.yellow), //yellow
+                        buildKey1(soundNum: 3, bgColor: Colors.yellow), //yellow
                   ),
                 ),
                 SizedBox(
@@ -123,7 +149,7 @@ class XylophoneApp extends StatelessWidget {
                     padding: const EdgeInsets.fromLTRB(5, 2, 5, 0.5),
                     // Add padding
                     child:
-                        buildKey(soundNum: 2, bgColor: Colors.orange), //orange
+                        buildKey1(soundNum: 2, bgColor: Colors.orange), //orange
                   ),
                 ),
                 SizedBox(
@@ -133,7 +159,7 @@ class XylophoneApp extends StatelessWidget {
                   child: Padding(
                     padding: const EdgeInsets.fromLTRB(5, 2, 5, 5),
                     // Add padding
-                    child: buildKey(soundNum: 1, bgColor: Colors.red), //red
+                    child: buildKey1(soundNum: 1, bgColor: Colors.red), //red
                   ),
                 ),
               ],
