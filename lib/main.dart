@@ -47,19 +47,41 @@ class XylophoneApp extends StatelessWidget {
   Widget buildKey1({required soundNum, required bgColor}) {
     return Expanded(
       flex: 5,
-      child: Container(
-        child: Card.filled(
-          shape: const RoundedRectangleBorder(
-            borderRadius: BorderRadius.all(
-              Radius.circular(20),
+      child: InkWell(
+        onTap: () async {
+          playSound(soundNumber: soundNum);
+        },
+        child: Container(
+          child: Card.filled(
+            shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(
+                Radius.circular(30),
+              ),
             ),
-          ),
-          color: bgColor,
-          child: const Row(
-            children: [
-              Card(),
-              Card(),
-            ],
+            color: bgColor,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: Container(
+                    height: 20,
+                    width: 20,
+                    decoration: const BoxDecoration(
+                        shape: BoxShape.circle, color: Colors.white70),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: Container(
+                    height: 20,
+                    width: 20,
+                    decoration: const BoxDecoration(
+                        shape: BoxShape.circle, color: Colors.white70),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),
