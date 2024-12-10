@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
+import 'package:xylophone_instrument/splash_screen.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Future.delayed(const Duration(seconds: 2));
-  FlutterNativeSplash.remove();
+  // FlutterNativeSplash.remove();
 
-  return runApp(XylophoneApp());
+  // return runApp(XylophoneApp());
+  return runApp(const SplashScreen());
 }
 
 class XylophoneApp extends StatelessWidget {
