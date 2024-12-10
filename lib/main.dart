@@ -19,31 +19,6 @@ class XylophoneApp extends StatelessWidget {
     await player.play(AssetSource('note$soundNumber.wav'));
   }
 
-  Widget buildKey({required soundNum, required bgColor}) {
-    return Expanded(
-      flex: 5,
-      child: ElevatedButton(
-        style: ElevatedButton.styleFrom(backgroundColor: bgColor),
-        onPressed: () async {
-          playSound(soundNumber: soundNum);
-        },
-        child: const Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            Card(
-              shape: CircleBorder(),
-              color: Colors.white,
-            ),
-            Card(
-              shape: CircleBorder(),
-              color: Colors.white,
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
   Widget buildKey1({required soundNum, required bgColor}) {
     return Expanded(
       flex: 5,
