@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:audioplayers/audioplayers.dart';
-import 'package:flutter_native_splash/flutter_native_splash.dart';
+import 'package:google_fonts/google_fonts.dart';
+
 class XylophoneApp extends StatelessWidget {
   final player = AudioPlayer();
 
@@ -58,26 +59,37 @@ class XylophoneApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-        backgroundColor: Colors.black,
+        backgroundColor: Colors.white,
         body: SafeArea(
           child: Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                const Center(
+                Center(
                   child: Text(
                     'My Xylophone',
-                    style: TextStyle(
-                      backgroundColor: Colors.black,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white,
-                      fontSize: 25,
+                    style: GoogleFonts.pacifico(
+                      shadows: [
+                        const Shadow(
+                          blurRadius: 15.0, // Adjust blur radius as needed
+                          color: Colors.grey, // Adjust shadow color as needed
+                          offset: Offset(5.0, 5.0), // Adjust shadow offset as needed
+                        ),
+                        // Add more Shadow objects for multiple shadows
+                      ],
+                      textStyle: const TextStyle(
+                        backgroundColor: Colors.white,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black,
+                        fontSize: 25,
+                        fontStyle: FontStyle.italic,
+                      ),
                     ),
                   ),
                 ),
                 SizedBox(
                   width:
-                  MediaQuery.of(context).size.width * 1.0, // Adjust width
+                      MediaQuery.of(context).size.width * 1.0, // Adjust width
                   height: MediaQuery.of(context).size.height / 10,
                   child: Padding(
                     padding: const EdgeInsets.fromLTRB(5, 5, 5, 0.5),
@@ -89,7 +101,7 @@ class XylophoneApp extends StatelessWidget {
                 ),
                 SizedBox(
                   width:
-                  MediaQuery.of(context).size.width * 0.95, // Adjust width
+                      MediaQuery.of(context).size.width * 0.95, // Adjust width
                   height: MediaQuery.of(context).size.height / 10,
                   child: Padding(
                     padding: const EdgeInsets.fromLTRB(5, 2, 5, 0.5),
@@ -100,7 +112,7 @@ class XylophoneApp extends StatelessWidget {
                 ),
                 SizedBox(
                   width:
-                  MediaQuery.of(context).size.width * 0.85, // Adjust width
+                      MediaQuery.of(context).size.width * 0.85, // Adjust width
                   height: MediaQuery.of(context).size.height / 10,
                   child: Padding(
                     padding: const EdgeInsets.fromLTRB(5, 2, 5, 0.5),
@@ -110,7 +122,7 @@ class XylophoneApp extends StatelessWidget {
                 ),
                 SizedBox(
                   width:
-                  MediaQuery.of(context).size.width * 0.75, // Adjust width
+                      MediaQuery.of(context).size.width * 0.75, // Adjust width
                   height: MediaQuery.of(context).size.height / 10,
                   child: Padding(
                     padding: const EdgeInsets.fromLTRB(5, 2, 5, 0.5),
@@ -120,29 +132,29 @@ class XylophoneApp extends StatelessWidget {
                 ),
                 SizedBox(
                   width:
-                  MediaQuery.of(context).size.width * 0.65, // Adjust width
+                      MediaQuery.of(context).size.width * 0.65, // Adjust width
                   height: MediaQuery.of(context).size.height / 10,
                   child: Padding(
                     padding: const EdgeInsets.fromLTRB(5, 2, 5, 0.5),
                     // Add padding
                     child:
-                    buildKey1(soundNum: 3, bgColor: Colors.yellow), //yellow
+                        buildKey1(soundNum: 3, bgColor: Colors.yellow), //yellow
                   ),
                 ),
                 SizedBox(
                   width:
-                  MediaQuery.of(context).size.width * 0.55, // Adjust width
+                      MediaQuery.of(context).size.width * 0.55, // Adjust width
                   height: MediaQuery.of(context).size.height / 10,
                   child: Padding(
                     padding: const EdgeInsets.fromLTRB(5, 2, 5, 0.5),
                     // Add padding
                     child:
-                    buildKey1(soundNum: 2, bgColor: Colors.orange), //orange
+                        buildKey1(soundNum: 2, bgColor: Colors.orange), //orange
                   ),
                 ),
                 SizedBox(
                   width:
-                  MediaQuery.of(context).size.width * 0.45, // Adjust width
+                      MediaQuery.of(context).size.width * 0.45, // Adjust width
                   height: MediaQuery.of(context).size.height / 10,
                   child: Padding(
                     padding: const EdgeInsets.fromLTRB(5, 2, 5, 5),

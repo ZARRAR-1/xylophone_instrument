@@ -1,7 +1,6 @@
 // Splash Screen
 import 'package:flutter/material.dart';
 import 'package:xylophone_instrument/xylophone.dart';
-import 'main.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -26,12 +25,12 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color.fromRGBO(0, 39, 94, 1),
+      backgroundColor: Colors.white,
       body: Padding(
         padding: const EdgeInsets.all(32.0),
         child: Center(
           child: Image.asset(
-            'assets/logo/splash_icon.png',
+            'assets/splash.png',
           ),
         ),
       ),
