@@ -2,10 +2,83 @@ import 'package:flutter/material.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class XylophoneApp extends StatelessWidget {
+class XylophoneApp extends StatefulWidget {
+  XylophoneApp({super.key});
+
+  @override
+  State<XylophoneApp> createState() => _XylophoneAppState();
+}
+
+class _XylophoneAppState extends State<XylophoneApp> {
   final player = AudioPlayer();
 
-  XylophoneApp({super.key});
+  String _userName = ''; // Initial username
+  final TextEditingController _nameController = TextEditingController();
+
+  Future<void> _checkFirstLaunch() async {
+    int isFirstLaunch =
+        0; //flag to store if the app is launched for the first time or not
+
+    if (isFirstLaunch == 0) {
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: const Text('Your Xylophone Needs To Know Your Name'),
+            content: TextField(
+              controller: _nameController,
+              decoration: const InputDecoration(hintText: 'Your Name'),
+            ),
+            actions: <Widget>[
+              TextButton(
+                child: const Text('OK'),
+                onPressed: () async {
+                  String enteredName = _nameController.text;
+                  if (enteredName.isNotEmpty) {
+                    setState(() {
+                      _userName = enteredName;
+                    });
+                    // await prefs.setString('userName', enteredName);
+                    // await prefs.setBool('isFirstLaunch', false);
+                  }
+                  Navigator.of(context).pop();
+                },
+              ),
+              TextButton(
+                child: const Text('Continue Without Name'),
+                onPressed: () async {
+                  // String enteredName = 'My';
+                  // if (enteredName.isNotEmpty) {
+                  //   setState(() {
+                  //     _userName = enteredName;
+                  //   });
+                  //   // await prefs.setString('userName', enteredName);
+                  //   // await prefs.setBool('isFirstLaunch', false);
+                  // }
+                  Navigator.of(context).pop();
+                },
+              ),
+            ],
+          );
+        },
+      );
+    } else {
+      // Load username from shared preferences
+      //String? savedName = prefs.getString('userName');
+      String? savedName;
+      if (savedName != null) {
+        setState(() {
+          _userName = savedName;
+        });
+      }
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _checkFirstLaunch();
+  }
 
   Future<void> playSound({required int soundNumber}) async {
     await player.play(AssetSource('note$soundNumber.wav'));
@@ -66,26 +139,53 @@ class XylophoneApp extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 Center(
-                  child: Text(
-                    'My Xylophone',
-                    style: GoogleFonts.pacifico(
-                      shadows: [
-                        const Shadow(
-                          blurRadius: 15.0, // Adjust blur radius as needed
-                          color: Colors.grey, // Adjust shadow color as needed
-                          offset: Offset(5.0, 5.0), // Adjust shadow offset as needed
+                  child: _userName.isNotEmpty
+                      ? Text(
+                          '$_userName\'s Xylophone',
+                          style: GoogleFonts.pacifico(
+                            shadows: [
+                              const Shadow(
+                                blurRadius:
+                                    15.0, // Adjust blur radius as needed
+                                color: Colors
+                                    .grey, // Adjust shadow color as needed
+                                offset: Offset(
+                                    5.0, 5.0), // Adjust shadow offset as needed
+                              ),
+                              // Add more Shadow objects for multiple shadows
+                            ],
+                            textStyle: const TextStyle(
+                              backgroundColor: Colors.white,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black,
+                              fontSize: 25,
+                              fontStyle: FontStyle.italic,
+                            ),
+                          ),
+                        )
+                      : Text(
+                          'My Xylophone',
+                          style: GoogleFonts.pacifico(
+                            shadows: [
+                              const Shadow(
+                                blurRadius:
+                                    15.0, // Adjust blur radius as needed
+                                color: Colors
+                                    .grey, // Adjust shadow color as needed
+                                offset: Offset(
+                                    5.0, 5.0), // Adjust shadow offset as needed
+                              ),
+                              // Add more Shadow objects for multiple shadows
+                            ],
+                            textStyle: const TextStyle(
+                              backgroundColor: Colors.white,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black,
+                              fontSize: 25,
+                              fontStyle: FontStyle.italic,
+                            ),
+                          ),
                         ),
-                        // Add more Shadow objects for multiple shadows
-                      ],
-                      textStyle: const TextStyle(
-                        backgroundColor: Colors.white,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black,
-                        fontSize: 25,
-                        fontStyle: FontStyle.italic,
-                      ),
-                    ),
-                  ),
                 ),
                 SizedBox(
                   width:
