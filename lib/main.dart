@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:xylophone_instrument/splash_screen.dart';
+import 'package:xylophone_instrument/xylophone.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -20,7 +20,8 @@ class MyApp extends StatelessWidget {
         // colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const SplashScreen(),
+      home:  XylophoneApp(),
+      //const SplashScreen(),
     );
   }
 }
