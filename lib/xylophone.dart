@@ -3,7 +3,7 @@ import 'package:audioplayers/audioplayers.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class XylophoneApp extends StatefulWidget {
-  XylophoneApp({super.key});
+  const XylophoneApp({super.key});
 
   @override
   State<XylophoneApp> createState() => _XylophoneAppState();
