@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -20,7 +22,7 @@ class _XylophoneAppState extends State<XylophoneApp> {
         0; //flag to store if the app is launched for the first time or not
 
     if (isFirstLaunch == 0) {
-      showDialog(
+      await showDialog(
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
@@ -37,6 +39,7 @@ class _XylophoneAppState extends State<XylophoneApp> {
                   if (enteredName.isNotEmpty) {
                     setState(() {
                       _userName = enteredName;
+                      isFirstLaunch = 1;
                     });
                     // await prefs.setString('userName', enteredName);
                     // await prefs.setBool('isFirstLaunch', false);
@@ -47,14 +50,16 @@ class _XylophoneAppState extends State<XylophoneApp> {
               TextButton(
                 child: const Text('Continue Without Name'),
                 onPressed: () async {
-                  // String enteredName = 'My';
-                  // if (enteredName.isNotEmpty) {
-                  //   setState(() {
-                  //     _userName = enteredName;
-                  //   });
+                  //Setting 'My' as a first name if use do not enters his name on opening the app first time.
+                  String enteredName = 'My';
+
+                  setState(() {
+                    _userName = enteredName;
+                    isFirstLaunch = 1;
+                  });
                   //   // await prefs.setString('userName', enteredName);
                   //   // await prefs.setBool('isFirstLaunch', false);
-                  // }
+
                   Navigator.of(context).pop();
                 },
               ),
@@ -66,18 +71,17 @@ class _XylophoneAppState extends State<XylophoneApp> {
       // Load username from shared preferences
       //String? savedName = prefs.getString('userName');
       String? savedName;
-      if (savedName != null) {
-        setState(() {
-          _userName = savedName;
-        });
-      }
+      setState(() {
+        _userName = savedName!;
+      });
     }
   }
 
   @override
-  void initState() {
+ void initState()  {
+    //Store the flag in the device so that whenever app is lauched, the flag isFirstLaunch is checked in initState()
     super.initState();
-    _checkFirstLaunch();
+    unawaited(_checkFirstLaunch());
   }
 
   Future<void> playSound({required int soundNumber}) async {
@@ -85,44 +89,39 @@ class _XylophoneAppState extends State<XylophoneApp> {
   }
 
   Widget buildKey1({required soundNum, required bgColor}) {
-    return Expanded(
-      flex: 5,
-      child: InkWell(
-        onTap: () async {
-          playSound(soundNumber: soundNum);
-        },
-        child: Container(
-          child: Card.filled(
-            shape: const RoundedRectangleBorder(
-              borderRadius: BorderRadius.all(
-                Radius.circular(30),
+    return InkWell(
+      onTap: () async {
+        await playSound(soundNumber: soundNum);
+      },
+      child: Card.filled(
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(
+            Radius.circular(30),
+          ),
+        ),
+        color: bgColor,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: Container(
+                height: 20,
+                width: 20,
+                decoration: const BoxDecoration(
+                    shape: BoxShape.circle, color: Colors.white70),
               ),
             ),
-            color: bgColor,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.all(10.0),
-                  child: Container(
-                    height: 20,
-                    width: 20,
-                    decoration: const BoxDecoration(
-                        shape: BoxShape.circle, color: Colors.white70),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(10.0),
-                  child: Container(
-                    height: 20,
-                    width: 20,
-                    decoration: const BoxDecoration(
-                        shape: BoxShape.circle, color: Colors.white70),
-                  ),
-                ),
-              ],
+            Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: Container(
+                height: 20,
+                width: 20,
+                decoration: const BoxDecoration(
+                    shape: BoxShape.circle, color: Colors.white70),
+              ),
             ),
-          ),
+          ],
         ),
       ),
     );
