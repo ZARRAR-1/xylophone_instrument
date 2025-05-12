@@ -1,5 +1,5 @@
 import 'dart:async';
-
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/material.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -14,14 +14,16 @@ class XylophoneApp extends StatefulWidget {
 class _XylophoneAppState extends State<XylophoneApp> {
   final player = AudioPlayer();
 
-  String _userName = ''; // Initial username
+  String? _userName = ''; // Initial username
   final TextEditingController _nameController = TextEditingController();
 
   Future<void> _checkFirstLaunch() async {
+    // Obtain shared preferences.
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
     int isFirstLaunch =
-        0; //flag to store if the app is launched for the first time or not
+        1; //flag to store if the app is launched for the first time or not
 
-    if (isFirstLaunch == 0) {
+    if (isFirstLaunch == 1) {
       await showDialog(
         context: context,
         builder: (BuildContext context) {
@@ -39,10 +41,10 @@ class _XylophoneAppState extends State<XylophoneApp> {
                   if (enteredName.isNotEmpty) {
                     setState(() {
                       _userName = enteredName;
-                      isFirstLaunch = 1;
+                      isFirstLaunch = 0;
                     });
-                    // await prefs.setString('userName', enteredName);
-                    // await prefs.setBool('isFirstLaunch', false);
+                    await prefs.setString('userName', enteredName);
+                    await prefs.setBool('isFirstLaunch', false);
                   }
                   Navigator.of(context).pop();
                 },
@@ -50,15 +52,15 @@ class _XylophoneAppState extends State<XylophoneApp> {
               TextButton(
                 child: const Text('Continue Without Name'),
                 onPressed: () async {
-                  //Setting 'My' as a first name if use do not enters his name on opening the app first time.
+                  //Setting 'My' as a first name if user do not enters his name on opening the app first time.
                   String enteredName = 'My';
 
                   setState(() {
                     _userName = enteredName;
-                    isFirstLaunch = 1;
+                    isFirstLaunch = 0;
                   });
-                  //   // await prefs.setString('userName', enteredName);
-                  //   // await prefs.setBool('isFirstLaunch', false);
+                    await prefs.setString('userName', enteredName);
+                    await prefs.setBool('isFirstLaunch', false);
 
                   Navigator.of(context).pop();
                 },
@@ -69,10 +71,9 @@ class _XylophoneAppState extends State<XylophoneApp> {
       );
     } else {
       // Load username from shared preferences
-      //String? savedName = prefs.getString('userName');
-      String? savedName;
+      String? savedName = prefs.getString('userName');
       setState(() {
-        _userName = savedName!;
+        _userName = savedName;
       });
     }
   }
@@ -138,7 +139,7 @@ class _XylophoneAppState extends State<XylophoneApp> {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 Center(
-                  child: _userName.isNotEmpty
+                  child: _userName!.isNotEmpty
                       ? Text(
                           '$_userName\'s Xylophone',
                           style: GoogleFonts.pacifico(
