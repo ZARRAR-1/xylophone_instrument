@@ -24,51 +24,57 @@ class _XylophoneAppState extends State<XylophoneApp> {
         1; //flag to store if the app is launched for the first time or not
 
     if (isFirstLaunch == 1) {
-      await showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: const Text('Your Xylophone Needs To Know Your Name'),
-            content: TextField(
-              controller: _nameController,
-              decoration: const InputDecoration(hintText: 'Your Name'),
-            ),
-            actions: <Widget>[
-              TextButton(
-                child: const Text('OK'),
-                onPressed: () async {
-                  String enteredName = _nameController.text;
-                  if (enteredName.isNotEmpty) {
+      if(context.mounted) {
+        await showDialog(
+          context:context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: const Text('Your Xylophone Needs To Know Your Name'),
+              content: TextField(
+                controller: _nameController,
+                decoration: const InputDecoration(hintText: 'Your Name'),
+              ),
+              actions: <Widget>[
+                TextButton(
+                  child: const Text('OK'),
+                  onPressed: () async {
+                    String enteredName = _nameController.text;
+                    if (enteredName.isNotEmpty) {
+                      setState(() {
+                        _userName = '$enteredName\'s';
+                        isFirstLaunch = 0;
+                      });
+                      await prefs.setString('userName', enteredName);
+                      await prefs.setBool('isFirstLaunch', false);
+                    }
+                    if (context.mounted) {
+                      Navigator.of(context).pop();
+                    }
+                  },
+                ),
+                TextButton(
+                  child: const Text('Continue Without Name'),
+                  onPressed: () async {
+                    //Setting 'My' as a first name if user do not enters his name on opening the app first time.
+                    String enteredName = 'My';
+
                     setState(() {
                       _userName = enteredName;
                       isFirstLaunch = 0;
                     });
                     await prefs.setString('userName', enteredName);
                     await prefs.setBool('isFirstLaunch', false);
-                  }
-                  Navigator.of(context).pop();
-                },
-              ),
-              TextButton(
-                child: const Text('Continue Without Name'),
-                onPressed: () async {
-                  //Setting 'My' as a first name if user do not enters his name on opening the app first time.
-                  String enteredName = 'My';
 
-                  setState(() {
-                    _userName = enteredName;
-                    isFirstLaunch = 0;
-                  });
-                    await prefs.setString('userName', enteredName);
-                    await prefs.setBool('isFirstLaunch', false);
-
-                  Navigator.of(context).pop();
-                },
-              ),
-            ],
-          );
-        },
-      );
+                    if (context.mounted) {
+                      Navigator.of(context).pop();
+                    }
+                  },
+                ),
+              ],
+            );
+          },
+        );
+      }
     } else {
       // Load username from shared preferences
       String? savedName = prefs.getString('userName');
@@ -141,7 +147,7 @@ class _XylophoneAppState extends State<XylophoneApp> {
                 Center(
                   child: _userName!.isNotEmpty
                       ? Text(
-                          '$_userName\'s Xylophone',
+                          '$_userName Xylophone',
                           style: GoogleFonts.pacifico(
                             shadows: [
                               const Shadow(
