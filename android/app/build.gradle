@@ -24,7 +24,7 @@ if (flutterVersionName == null) {
 
 android {
     namespace "com.example.xylophone_instrument"
-    compileSdkVersion 34
+    compileSdkVersion 35
     ndkVersion = "25.1.8937393"
 
     compileOptions {
@@ -37,8 +37,8 @@ android {
         applicationId "com.example.xylophone_instrument"
         // You can update the following values to match your application needs.
         // For more information, see: https://docs.flutter.dev/deployment/android#reviewing-the-gradle-build-configuration.
-        minSdkVersion flutter.minSdkVersion
-        targetSdkVersion flutter.targetSdkVersion
+        minSdkVersion 31
+        targetSdkVersion 33
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
     }
