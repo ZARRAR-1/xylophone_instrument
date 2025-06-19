@@ -149,6 +149,7 @@ class _XylophoneAppState extends State<XylophoneApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       home: Scaffold(
         resizeToAvoidBottomInset: true,
         backgroundColor: Colors.white,
