@@ -14,16 +14,18 @@ class XylophoneApp extends StatefulWidget {
 class _XylophoneAppState extends State<XylophoneApp> {
   final player = AudioPlayer();
 
+
   String? _userName = ''; // Initial username
   final TextEditingController _nameController = TextEditingController();
 
   Future<void> _checkFirstLaunch() async {
     // Obtain shared preferences.
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-    int isFirstLaunch =
-        1; //flag to store if the app is launched for the first time or not
 
-    if (isFirstLaunch == 1) {
+    //If isFirstLaunch return nulls, it defaults to true:
+    bool isFirstLaunch = prefs.getBool('isFirstLaunch') ?? true;
+
+    if (isFirstLaunch == true) {
       if(context.mounted) {
         await showDialog(
           context:context,
@@ -42,7 +44,7 @@ class _XylophoneAppState extends State<XylophoneApp> {
                     if (enteredName.isNotEmpty) {
                       setState(() {
                         _userName = '$enteredName\'s';
-                        isFirstLaunch = 0;
+                        isFirstLaunch = false;
                       });
                       await prefs.setString('userName', enteredName);
                       await prefs.setBool('isFirstLaunch', false);
@@ -60,7 +62,7 @@ class _XylophoneAppState extends State<XylophoneApp> {
 
                     setState(() {
                       _userName = enteredName;
-                      isFirstLaunch = 0;
+                      isFirstLaunch = false;
                     });
                     await prefs.setString('userName', enteredName);
                     await prefs.setBool('isFirstLaunch', false);
@@ -86,7 +88,7 @@ class _XylophoneAppState extends State<XylophoneApp> {
 
   @override
  void initState()  {
-    //Store the flag in the device so that whenever app is lauched, the flag isFirstLaunch is checked in initState()
+    //Store the flag in the device so that whenever app is launched, the flag isFirstLaunch is checked in initState()
     super.initState();
     unawaited(_checkFirstLaunch());
   }
