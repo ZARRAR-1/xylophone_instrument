@@ -14,9 +14,9 @@ class XylophoneApp extends StatefulWidget {
 class _XylophoneAppState extends State<XylophoneApp> {
   final player = AudioPlayer();
 
-
   String? _userName = ''; // Initial username
   final TextEditingController _nameController = TextEditingController();
+
 
   Future<void> _checkFirstLaunch() async {
     // Obtain shared preferences.
@@ -88,7 +88,6 @@ class _XylophoneAppState extends State<XylophoneApp> {
 
   @override
  void initState()  {
-    //Store the flag in the device so that whenever app is launched, the flag isFirstLaunch is checked in initState()
     super.initState();
     unawaited(_checkFirstLaunch());
   }
@@ -97,7 +96,7 @@ class _XylophoneAppState extends State<XylophoneApp> {
     await player.play(AssetSource('note$soundNumber.wav'));
   }
 
-  Widget buildKey1({required soundNum, required bgColor}) {
+  Widget buildKey({required soundNum, required bgColor}) {
     return InkWell(
       onTap: () async {
         await playSound(soundNumber: soundNum);
@@ -136,142 +135,90 @@ class _XylophoneAppState extends State<XylophoneApp> {
     );
   }
 
+  Widget buildKeyPad({required int soundNum, required double widthFactor, required Color color}) {
+    return SizedBox(
+      width: widthFactor * MediaQuery.of(context).size.width,
+      height: MediaQuery.of(context).size.height / 10,
+      child: Padding(
+        padding: const EdgeInsets.fromLTRB(5, 2, 5, 0.5),
+        child: buildKey(soundNum: soundNum, bgColor: color),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
+        resizeToAvoidBottomInset: true,
         backgroundColor: Colors.white,
         body: SafeArea(
-          child: Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                Center(
-                  child: _userName!.isNotEmpty
-                      ? Text(
-                          '$_userName Xylophone',
-                          style: GoogleFonts.pacifico(
-                            shadows: [
-                              const Shadow(
-                                blurRadius:
-                                    15.0, // Adjust blur radius as needed
-                                color: Colors
-                                    .grey, // Adjust shadow color as needed
-                                offset: Offset(
-                                    5.0, 5.0), // Adjust shadow offset as needed
+          child: LayoutBuilder(
+            builder: (context, constraints) {
+              return SingleChildScrollView(
+                padding: EdgeInsets.only(
+                  bottom: MediaQuery.of(context).viewInsets.bottom,
+                ),
+                child: ConstrainedBox(
+                  constraints: BoxConstraints(minHeight: constraints.maxHeight),
+                  child: IntrinsicHeight(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Center(
+                          child: _userName!.isNotEmpty
+                              ? Text(
+                            '$_userName Xylophone',
+                            style: GoogleFonts.pacifico(
+                              shadows: [
+                                const Shadow(
+                                  blurRadius: 15.0,
+                                  color: Colors.grey,
+                                  offset: Offset(5.0, 5.0),
+                                ),
+                              ],
+                              textStyle: const TextStyle(
+                                backgroundColor: Colors.white,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black,
+                                fontSize: 25,
+                                fontStyle: FontStyle.italic,
                               ),
-                              // Add more Shadow objects for multiple shadows
-                            ],
-                            textStyle: const TextStyle(
-                              backgroundColor: Colors.white,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.black,
-                              fontSize: 25,
-                              fontStyle: FontStyle.italic,
                             ),
-                          ),
-                        )
-                      : Text(
-                          'My Xylophone',
-                          style: GoogleFonts.pacifico(
-                            shadows: [
-                              const Shadow(
-                                blurRadius:
-                                    15.0, // Adjust blur radius as needed
-                                color: Colors
-                                    .grey, // Adjust shadow color as needed
-                                offset: Offset(
-                                    5.0, 5.0), // Adjust shadow offset as needed
+                          )
+                              : Text(
+                            'My Xylophone',
+                            style: GoogleFonts.pacifico(
+                              shadows: [
+                                const Shadow(
+                                  blurRadius: 15.0,
+                                  color: Colors.grey,
+                                  offset: Offset(5.0, 5.0),
+                                ),
+                              ],
+                              textStyle: const TextStyle(
+                                backgroundColor: Colors.white,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black,
+                                fontSize: 25,
+                                fontStyle: FontStyle.italic,
                               ),
-                              // Add more Shadow objects for multiple shadows
-                            ],
-                            textStyle: const TextStyle(
-                              backgroundColor: Colors.white,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.black,
-                              fontSize: 25,
-                              fontStyle: FontStyle.italic,
                             ),
                           ),
                         ),
-                ),
-                SizedBox(
-                  width:
-                      MediaQuery.of(context).size.width * 1.0, // Adjust width
-                  height: MediaQuery.of(context).size.height / 10,
-                  child: Padding(
-                    padding: const EdgeInsets.fromLTRB(5, 5, 5, 0.5),
-                    // Add padding
-                    child: buildKey1(
-                        soundNum: 7,
-                        bgColor: Colors.purpleAccent), //purpleAccent
+                        buildKeyPad(soundNum: 7, widthFactor: 1.0, color: Colors.purpleAccent),
+                        buildKeyPad(soundNum: 6, widthFactor: 0.95, color: Colors.lightBlue),
+                        buildKeyPad(soundNum: 5, widthFactor: 0.85, color: Colors.teal),
+                        buildKeyPad(soundNum: 4, widthFactor: 0.75, color: Colors.green),
+                        buildKeyPad(soundNum: 3, widthFactor: 0.65, color: Colors.yellow),
+                        buildKeyPad(soundNum: 2, widthFactor: 0.55, color: Colors.orange),
+                        buildKeyPad(soundNum: 1, widthFactor: 0.45, color: Colors.red),
+                      ],
+                    ),
                   ),
                 ),
-                SizedBox(
-                  width:
-                      MediaQuery.of(context).size.width * 0.95, // Adjust width
-                  height: MediaQuery.of(context).size.height / 10,
-                  child: Padding(
-                    padding: const EdgeInsets.fromLTRB(5, 2, 5, 0.5),
-                    // Add padding
-                    child: buildKey1(
-                        soundNum: 6, bgColor: Colors.lightBlue), //lightBlue
-                  ),
-                ),
-                SizedBox(
-                  width:
-                      MediaQuery.of(context).size.width * 0.85, // Adjust width
-                  height: MediaQuery.of(context).size.height / 10,
-                  child: Padding(
-                    padding: const EdgeInsets.fromLTRB(5, 2, 5, 0.5),
-                    // Add padding
-                    child: buildKey1(soundNum: 5, bgColor: Colors.teal), //teal
-                  ),
-                ),
-                SizedBox(
-                  width:
-                      MediaQuery.of(context).size.width * 0.75, // Adjust width
-                  height: MediaQuery.of(context).size.height / 10,
-                  child: Padding(
-                    padding: const EdgeInsets.fromLTRB(5, 2, 5, 0.5),
-                    // Add padding
-                    child: buildKey1(soundNum: 4, bgColor: Colors.green),
-                  ),
-                ),
-                SizedBox(
-                  width:
-                      MediaQuery.of(context).size.width * 0.65, // Adjust width
-                  height: MediaQuery.of(context).size.height / 10,
-                  child: Padding(
-                    padding: const EdgeInsets.fromLTRB(5, 2, 5, 0.5),
-                    // Add padding
-                    child:
-                        buildKey1(soundNum: 3, bgColor: Colors.yellow), //yellow
-                  ),
-                ),
-                SizedBox(
-                  width:
-                      MediaQuery.of(context).size.width * 0.55, // Adjust width
-                  height: MediaQuery.of(context).size.height / 10,
-                  child: Padding(
-                    padding: const EdgeInsets.fromLTRB(5, 2, 5, 0.5),
-                    // Add padding
-                    child:
-                        buildKey1(soundNum: 2, bgColor: Colors.orange), //orange
-                  ),
-                ),
-                SizedBox(
-                  width:
-                      MediaQuery.of(context).size.width * 0.45, // Adjust width
-                  height: MediaQuery.of(context).size.height / 10,
-                  child: Padding(
-                    padding: const EdgeInsets.fromLTRB(5, 2, 5, 5),
-                    // Add padding
-                    child: buildKey1(soundNum: 1, bgColor: Colors.red), //red
-                  ),
-                ),
-              ],
-            ),
+              );
+            },
           ),
         ),
       ),
