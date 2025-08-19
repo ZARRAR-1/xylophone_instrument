@@ -1,6 +1,6 @@
 // Splash Screen
 import 'package:flutter/material.dart';
-import 'package:xylophone_instrument/xylophone.dart';
+import 'package:xylophone_instrument/xylophone_YT.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
