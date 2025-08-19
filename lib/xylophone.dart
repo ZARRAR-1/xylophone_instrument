@@ -17,7 +17,6 @@ class _XylophoneAppState extends State<XylophoneApp> {
   String? _userName = ''; // Initial username
   final TextEditingController _nameController = TextEditingController();
 
-
   Future<void> _checkFirstLaunch() async {
     // Obtain shared preferences.
     final SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -26,9 +25,9 @@ class _XylophoneAppState extends State<XylophoneApp> {
     bool isFirstLaunch = prefs.getBool('isFirstLaunch') ?? true;
 
     if (isFirstLaunch == true) {
-      if(context.mounted) {
+      if (context.mounted) {
         await showDialog(
-          context:context,
+          context: context,
           builder: (BuildContext context) {
             return AlertDialog(
               title: const Text('Your Xylophone Needs To Know Your Name'),
@@ -87,7 +86,7 @@ class _XylophoneAppState extends State<XylophoneApp> {
   }
 
   @override
- void initState()  {
+  void initState() {
     super.initState();
     unawaited(_checkFirstLaunch());
   }
@@ -135,7 +134,10 @@ class _XylophoneAppState extends State<XylophoneApp> {
     );
   }
 
-  Widget buildKeyPad({required int soundNum, required double widthFactor, required Color color}) {
+  Widget buildKeyPad(
+      {required int soundNum,
+      required double widthFactor,
+      required Color color}) {
     return SizedBox(
       width: widthFactor * MediaQuery.of(context).size.width,
       height: MediaQuery.of(context).size.height / 10,
@@ -168,52 +170,111 @@ class _XylophoneAppState extends State<XylophoneApp> {
                       children: [
                         Center(
                           child: _userName!.isNotEmpty
-                              ? Text(
-                            '$_userName Xylophone',
-                            style: GoogleFonts.pacifico(
-                              shadows: [
-                                const Shadow(
-                                  blurRadius: 15.0,
-                                  color: Colors.grey,
-                                  offset: Offset(5.0, 5.0),
-                                ),
-                              ],
-                              textStyle: const TextStyle(
-                                backgroundColor: Colors.white,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.black,
-                                fontSize: 25,
-                                fontStyle: FontStyle.italic,
-                              ),
-                            ),
-                          )
+                              ? Semantics(
+                                  label: 'Title of the Xylophone App',
+                                  enabled: true,
+                                  readOnly: true,
+                                  child: Text(
+                                    '$_userName Xylophone',
+                                    style: GoogleFonts.pacifico(
+                                      shadows: [
+                                        const Shadow(
+                                          blurRadius: 15.0,
+                                          color: Colors.grey,
+                                          offset: Offset(5.0, 5.0),
+                                        ),
+                                      ],
+                                      textStyle: const TextStyle(
+                                        backgroundColor: Colors.white,
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.black,
+                                        fontSize: 25,
+                                        fontStyle: FontStyle.italic,
+                                      ),
+                                    ),
+                                  ),
+                                )
                               : Text(
-                            'My Xylophone',
-                            style: GoogleFonts.pacifico(
-                              shadows: [
-                                const Shadow(
-                                  blurRadius: 15.0,
-                                  color: Colors.grey,
-                                  offset: Offset(5.0, 5.0),
+                                  'My Xylophone',
+                                  style: GoogleFonts.pacifico(
+                                    shadows: [
+                                      const Shadow(
+                                        blurRadius: 15.0,
+                                        color: Colors.grey,
+                                        offset: Offset(5.0, 5.0),
+                                      ),
+                                    ],
+                                    textStyle: const TextStyle(
+                                      backgroundColor: Colors.white,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.black,
+                                      fontSize: 25,
+                                      fontStyle: FontStyle.italic,
+                                    ),
+                                  ),
                                 ),
-                              ],
-                              textStyle: const TextStyle(
-                                backgroundColor: Colors.white,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.black,
-                                fontSize: 25,
-                                fontStyle: FontStyle.italic,
-                              ),
-                            ),
-                          ),
                         ),
-                        buildKeyPad(soundNum: 7, widthFactor: 1.0, color: Colors.purpleAccent),
-                        buildKeyPad(soundNum: 6, widthFactor: 0.95, color: Colors.lightBlue),
-                        buildKeyPad(soundNum: 5, widthFactor: 0.85, color: Colors.teal),
-                        buildKeyPad(soundNum: 4, widthFactor: 0.75, color: Colors.green),
-                        buildKeyPad(soundNum: 3, widthFactor: 0.65, color: Colors.yellow),
-                        buildKeyPad(soundNum: 2, widthFactor: 0.55, color: Colors.orange),
-                        buildKeyPad(soundNum: 1, widthFactor: 0.45, color: Colors.red),
+                        Semantics(
+                          label: 'Purple Colored Key',
+                          enabled: true,
+                          readOnly: true,
+                          child: buildKeyPad(
+                              soundNum: 7,
+                              widthFactor: 1.0,
+                              color: Colors.purpleAccent),
+                        ),
+                        Semantics(
+                          enabled: true,
+                          label: 'Blue Colored Key',
+                          readOnly: true,
+                          child: buildKeyPad(
+                              soundNum: 6,
+                              widthFactor: 0.95,
+                              color: Colors.lightBlue),
+                        ),
+                        Semantics(
+                          readOnly: true,
+                          label: 'Teal Colored Key',
+                          enabled: true,
+                          child: buildKeyPad(
+                              soundNum: 5,
+                              widthFactor: 0.85,
+                              color: Colors.teal),
+                        ),
+                        Semantics(
+                          readOnly: true,
+                          label: 'Green Colored Key',
+                          enabled: true,
+                          child: buildKeyPad(
+                              soundNum: 4,
+                              widthFactor: 0.75,
+                              color: Colors.green),
+                        ),
+                        Semantics(
+                          readOnly: true,
+                          label: 'Yellow Colored Key',
+                          enabled: true,
+                          child: buildKeyPad(
+                              soundNum: 3,
+                              widthFactor: 0.65,
+                              color: Colors.yellow),
+                        ),
+                        Semantics(
+                          readOnly: true,
+                          label: 'Orange Colored Key',
+                          enabled: true,
+                          child: buildKeyPad(
+                              soundNum: 2,
+                              widthFactor: 0.55,
+                              color: Colors.orange),
+                        ),
+                        Semantics(
+                          readOnly: true,
+                          label: 'Red Colored Key',
+                          enabled: true,
+                          child: buildKeyPad(
+                              soundNum: 1, widthFactor: 0.45, color: Colors.red),
+                        ),
                       ],
                     ),
                   ),
